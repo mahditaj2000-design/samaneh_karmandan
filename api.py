@@ -35,7 +35,7 @@ def create_token(data : dict):
 app = FastAPI()
 
 @app.post("/enter/auth")
-def enter_user(username : str , pass_hash : str):
+def enter_user(username : str , password : str):
 
     query = "SELECT username FROM users WHERE username = %s"
     value = [username]
@@ -48,11 +48,11 @@ def enter_user(username : str , pass_hash : str):
         cursor.execute(query , value)
         pass_hash1 = cursor.fetchone()[0]
 
-        res = bcrypt.checkpw(pass_hash.encode() , pass_hash1.encode())
+        res = bcrypt.checkpw(password.encode() , pass_hash1.encode())
         
         if res:
             token = create_token({"username" : username})
-            return {"Massage" : "user enter succesfuly" , "token" : token}
+            return {"Massage" : f"Welcome {username}" , "token" : token}
         
         else:
             raise HTTPException(status_code=401 , detail="Wrong password")
@@ -61,7 +61,15 @@ def enter_user(username : str , pass_hash : str):
 
 @app.post("/user/enrollment")
 def enrollment_user(employee_id : str , username : str , password : str):
-    
+
+    query3 = "SELECT employee_id FROM users WHERE employee_id = %s"
+    value3 = [employee_id]
+    cursor.execute(query3 , value3)
+    ress = cursor.fetchone()
+
+    if ress is not None :
+        raise HTTPException(status_code=400 , detail="The emploeey_id you choos is already exists")
+        
     if username == "" or password == "" :
         raise HTTPException(status_code=400 , detail="Wrong username or password")
     if password in common_passwords or len(password)<8 :
@@ -84,5 +92,4 @@ def enrollment_user(employee_id : str , username : str , password : str):
     cursor.execute(query , values)
     connection.commit()
 
-    return {"Massage" : "Welcome to The Samaneh Karmandan"}
-    
+    return {"Massage" : f"Welcome to The Samaneh Karmandan{username}"}

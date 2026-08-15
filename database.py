@@ -5,25 +5,25 @@ try:
     CREATE TABLE IF NOT EXISTS roles (
     role_name VARCHAR(100) NOT NULL UNIQUE,
     id INT AUTO_INCREMENT PRIMARY KEY)
-    """)
+    ENGINE=InnoDB""")
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS situation (
     situation_name VARCHAR(60) NOT NULL,
     id INT AUTO_INCREMENT PRIMARY KEY)
-    """)
+    ENGINE=InnoDB""")
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS positionn (
     positionn_name VARCHAR(70),
     id INT PRIMARY KEY AUTO_INCREMENT)
-    """)
+    ENGINE=InnoDB""")
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS department (
     department_name VARCHAR(100),
     id INT PRIMARY KEY AUTO_INCREMENT)
-    """)
+    ENGINE=InnoDB""")
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS employees (
@@ -46,7 +46,7 @@ try:
         FOREIGN KEY (situation_id) REFERENCES situation(id),
         FOREIGN KEY (manager_id) REFERENCES employees(id)
         )
-    """)
+    ENGINE=InnoDB""")
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users(
@@ -59,7 +59,7 @@ try:
     FOREIGN KEY (employee_id) REFERENCES employees(id)
     )
 
-    """)
+    ENGINE=InnoDB""")
 
     connection.commit()
     print("opperation succied")
