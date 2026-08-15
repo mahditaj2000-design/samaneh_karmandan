@@ -1,8 +1,9 @@
-from fastapi import FastAPI , HTTPException
+from fastapi import FastAPI , HTTPException , Depends
+from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
 from connection import cursor , connection , mariadb
 import jwt
-from datetime import datetime , timedelta , timezone
+from datetime import datetime , timedelta , timezone , date
 import bcrypt
 common_passwords = [
     "password", "123456", "123456789", "12345678", "12345", "1234567",
@@ -26,11 +27,19 @@ common_passwords = [
 
 SECRET_KEY = "SoltanMahdi:1379"
 ALGORITHEM = "HS256"
+token_check = OAuth2PasswordBearer(tokenUrl="enter/auth")
 
 def create_token(data : dict):
     data["exp"] = datetime.now(timezone.utc) + timedelta(minutes = 30)
     token = jwt.encode(data , SECRET_KEY , algorithm=ALGORITHEM)
     return token
+
+def verify_token(token : str):
+    try:
+        data = jwt.decode(token , SECRET_KEY , algorithms=[ALGORITHEM])
+        return data
+    except:
+        raise HTTPException(status_code=401 , detail="Invalid OR expierd token")
 
 app = FastAPI()
 
@@ -48,10 +57,21 @@ def enter_user(username : str , password : str):
         cursor.execute(query , value)
         pass_hash1 = cursor.fetchone()[0]
 
+        query2 = "SELECT employee_id FROM users WHERE username = %s"
+        value2 = [username]
+        cursor.execute(query2 , value2)
+        employee_id = cursor.fetchone()
+
+        query3 = "SELECT role_id FROM employees WHERE id = %s"
+        value3 = [employee_id[0]]
+        cursor.execute(query3 , value3)
+        
+        role_id = cursor.fetchone()
+
         res = bcrypt.checkpw(password.encode() , pass_hash1.encode())
         
         if res:
-            token = create_token({"username" : username})
+            token = create_token({"username" : username , "role_id" : role_id[0]})
             return {"Massage" : f"Welcome {username}" , "token" : token}
         
         else:
@@ -93,3 +113,34 @@ def enrollment_user(employee_id : str , username : str , password : str):
     connection.commit()
 
     return {"Massage" : f"Welcome to The Samaneh Karmandan{username}"}
+
+@app.post("/Making/emploeey")
+def making_emploeeys(* , token : str = Depends(token_check),
+                 name : str,
+                 familyname : str,
+                 email_address : str = None,
+                 mobile : str,
+                 hire_date : date,
+                 role_id : int,
+                 positionn_id : int,
+                 situation_id : int,
+                 department_id : int,
+                 manager_id : int = None,
+                 personnel_code : str):
+    
+    data = verify_token(token)
+    if data["role_id"] != 1:
+        raise HTTPException(status_code=403 , detail= "sorry.You dont have acsses for doing this")
+    else:
+        query = """INSERT INTO employees (name , familyname , email_address ,
+                   mobile , hire_date , role_id , positionn_id , situation_id,
+                   department_id , manager_id , personnel_code)
+                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+        values = [name , familyname , email_address ,mobile , hire_date ,
+                  role_id , positionn_id , situation_id, department_id , 
+                  manager_id , personnel_code]
+
+        cursor.execute(query , values)
+        connection.commit()
+
+        return {"Massage" : "The emploeey aded succsesfuly"}
