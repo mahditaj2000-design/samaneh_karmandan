@@ -1,5 +1,5 @@
 from fastapi import FastAPI , HTTPException , Depends
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer , OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from connection import cursor , connection , mariadb
 import jwt
@@ -25,6 +25,11 @@ common_passwords = [
     "q1w2e3r4", "1qazxsw2", "zzzzzz", "qwerty123", "iloveyou1"
 ]
 
+class EnrollmentData(BaseModel):
+    employee_id : int
+    username : str
+    password : str
+
 SECRET_KEY = "SoltanMahdi:1379"
 ALGORITHEM = "HS256"
 token_check = OAuth2PasswordBearer(tokenUrl="enter/auth")
@@ -44,7 +49,9 @@ def verify_token(token : str):
 app = FastAPI()
 
 @app.post("/enter/auth")
-def enter_user(username : str , password : str):
+def enter_user(form_data: OAuth2PasswordRequestForm = Depends()):
+    username = form_data.username
+    password = form_data.password
 
     query = "SELECT username FROM users WHERE username = %s"
     value = [username]
@@ -72,7 +79,7 @@ def enter_user(username : str , password : str):
         
         if res:
             token = create_token({"username" : username , "role_id" : role_id[0]})
-            return {"Massage" : f"Welcome {username}" , "token" : token}
+            return {"Massage" : f"Welcome {username}" , "access_token" : token , "token_type": "bearer"}
         
         else:
             raise HTTPException(status_code=401 , detail="Wrong password")
@@ -80,7 +87,11 @@ def enter_user(username : str , password : str):
         raise HTTPException(status_code=401 , detail="Wrong username")
 
 @app.post("/user/enrollment")
-def enrollment_user(employee_id : str , username : str , password : str):
+def enrollment_user(user_data : EnrollmentData):
+    employee_id = user_data.employee_id
+    username = user_data.username
+    password = user_data.password
+    
 
     query3 = "SELECT employee_id FROM users WHERE employee_id = %s"
     value3 = [employee_id]
@@ -112,7 +123,7 @@ def enrollment_user(employee_id : str , username : str , password : str):
     cursor.execute(query , values)
     connection.commit()
 
-    return {"Massage" : f"Welcome to The Samaneh Karmandan{username}"}
+    return {"Massage" : f"Welcome to The Samaneh Karmandan {username}"}
 
 @app.post("/Making/emploeey")
 def making_emploeeys(* , token : str = Depends(token_check),
