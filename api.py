@@ -30,6 +30,20 @@ class EnrollmentData(BaseModel):
     username : str
     password : str
 
+class Emploeey(BaseModel):
+    name : str
+    familyname : str
+    email_address : str = None
+    mobile : str
+    hire_date : date
+    role_id : int
+    positionn_id : int
+    situation_id : int
+    department_id : int
+    manager_id : int = None
+    personnel_code : str
+
+
 SECRET_KEY = "SoltanMahdi:1379"
 ALGORITHEM = "HS256"
 token_check = OAuth2PasswordBearer(tokenUrl="enter/auth")
@@ -91,7 +105,6 @@ def enrollment_user(user_data : EnrollmentData):
     employee_id = user_data.employee_id
     username = user_data.username
     password = user_data.password
-    
 
     query3 = "SELECT employee_id FROM users WHERE employee_id = %s"
     value3 = [employee_id]
@@ -126,19 +139,19 @@ def enrollment_user(user_data : EnrollmentData):
     return {"Massage" : f"Welcome to The Samaneh Karmandan {username}"}
 
 @app.post("/Making/emploeey")
-def making_emploeeys(* , token : str = Depends(token_check),
-                 name : str,
-                 familyname : str,
-                 email_address : str = None,
-                 mobile : str,
-                 hire_date : date,
-                 role_id : int,
-                 positionn_id : int,
-                 situation_id : int,
-                 department_id : int,
-                 manager_id : int = None,
-                 personnel_code : str):
-    
+def making_emploeeys(* , token : str = Depends(token_check) , emploeey_data : Emploeey):
+    name = emploeey_data.name
+    familyname = emploeey_data.familyname
+    email_address = emploeey_data.email_address
+    mobile = emploeey_data.mobile
+    hire_date = emploeey_data.hire_date
+    role_id = emploeey_data.role_id
+    positionn_id = emploeey_data.positionn_id
+    situation_id = emploeey_data.situation_id
+    department_id = emploeey_data.department_id
+    manager_id = emploeey_data.manager_id
+    personnel_code = emploeey_data.personnel_code
+
     data = verify_token(token)
     if data["role_id"] != 1:
         raise HTTPException(status_code=403 , detail= "sorry.You dont have acsses for doing this")
