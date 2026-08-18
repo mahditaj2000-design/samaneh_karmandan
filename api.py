@@ -1,10 +1,13 @@
 from fastapi import FastAPI , HTTPException , Depends
 from fastapi.security import OAuth2PasswordBearer , OAuth2PasswordRequestForm
 from pydantic import BaseModel
-from connection import cursor , connection , mariadb
+from connection import pool , mariadb
 import jwt
 from datetime import datetime , timedelta , timezone , date
 import bcrypt
+from dotenv import load_dotenv
+import os
+
 common_passwords = [
     "password", "123456", "123456789", "12345678", "12345", "1234567",
     "qwerty", "abc123", "111111", "123123", "admin", "letmein",
@@ -43,10 +46,19 @@ class Emploeey(BaseModel):
     manager_id : int = None
     personnel_code : str
 
-
-SECRET_KEY = "SoltanMahdi:1379"
+load_dotenv()
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHEM = "HS256"
-token_check = OAuth2PasswordBearer(tokenUrl="enter/auth")
+token_man = OAuth2PasswordBearer(tokenUrl="/enter/auth")
+
+def get_conn():
+    conn = pool.get_connection()
+    cursor = conn.cursor()
+    try:
+        yield conn , cursor
+    finally:
+        cursor.close()
+        conn.close()
 
 def create_token(data : dict):
     data["exp"] = datetime.now(timezone.utc) + timedelta(minutes = 30)
@@ -60,48 +72,51 @@ def verify_token(token : str):
     except:
         raise HTTPException(status_code=401 , detail="Invalid OR expierd token")
 
+def check_manager(token = Depends(token_man)):
+    data = verify_token(token)  
+    if data["role_id"] != 1:
+        raise HTTPException(status_code=403 , detail= "sorry.You dont have acsses for doing this")
+    return data
+
 app = FastAPI()
 
 @app.post("/enter/auth")
-def enter_user(form_data: OAuth2PasswordRequestForm = Depends()):
-    username = form_data.username
-    password = form_data.password
+def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(get_conn)):
 
-    query = "SELECT username FROM users WHERE username = %s"
+    conn , cursor = db
+
+    username = Form_data.username
+    password = Form_data.password
+
+    query = """SELECT users.pass_hash , employees.role_id
+    FROM users
+    JOIN employees ON employees.id = users.employee_id
+    WHERE users.username = %s"""
     value = [username]
+
     cursor.execute(query , value)
-    result = cursor.fetchone()
-    
-    if result is not None:
-        query = "SELECT pass_hash FROM users WHERE username = %s"
-        value = [username]
-        cursor.execute(query , value)
-        pass_hash1 = cursor.fetchone()[0]
+    res = cursor.fetchone()
 
-        query2 = "SELECT employee_id FROM users WHERE username = %s"
-        value2 = [username]
-        cursor.execute(query2 , value2)
-        employee_id = cursor.fetchone()
-
-        query3 = "SELECT role_id FROM employees WHERE id = %s"
-        value3 = [employee_id[0]]
-        cursor.execute(query3 , value3)
-        
-        role_id = cursor.fetchone()
-
-        res = bcrypt.checkpw(password.encode() , pass_hash1.encode())
-        
-        if res:
-            token = create_token({"username" : username , "role_id" : role_id[0]})
-            return {"Massage" : f"Welcome {username}" , "access_token" : token , "token_type": "bearer"}
-        
-        else:
-            raise HTTPException(status_code=401 , detail="Wrong password")
+    if res is None:
+        raise HTTPException(status_code=401 , detail="This username dosnt exists")
     else:
-        raise HTTPException(status_code=401 , detail="Wrong username")
+        result = bcrypt.checkpw(password.encode() , res[0].encode())
+        if result is False:
+            raise HTTPException(status_code=400 , detail="password is wrong")
+        else:
+            if res[1] < 1 or res[1] > 2 :
+                raise HTTPException(status_code=403 , detail="You dont have access")
+            else:
+                token = create_token({"username":username , "role_id":res[1]})
+                return {
+                       "Massage":"Wellcome to samaneh karmandan","access_token":token , "token_type":"bearer"
+                    }
 
 @app.post("/user/enrollment")
-def enrollment_user(user_data : EnrollmentData):
+def enrollment_user(user_data : EnrollmentData , db=Depends(get_conn)):
+
+    conn , cursor = db
+
     employee_id = user_data.employee_id
     username = user_data.username
     password = user_data.password
@@ -113,7 +128,6 @@ def enrollment_user(user_data : EnrollmentData):
 
     if ress is not None :
         raise HTTPException(status_code=400 , detail="The emploeey_id you choos is already exists")
-        
     if username == "" or password == "" :
         raise HTTPException(status_code=400 , detail="Wrong username or password")
     if password in common_passwords or len(password)<8 :
@@ -129,17 +143,22 @@ def enrollment_user(user_data : EnrollmentData):
         raise HTTPException(status_code=400 , detail="The username you choos is already exists")
 
     pass_hash = bcrypt.hashpw(password.encode() , bcrypt.gensalt()).decode()
-    
+        
     query = "INSERT INTO users(employee_id , username , pass_hash) VALUES (%s , %s , %s)"
     values = [employee_id , username , pass_hash]
 
     cursor.execute(query , values)
-    connection.commit()
+    conn.commit()
 
     return {"Massage" : f"Welcome to The Samaneh Karmandan {username}"}
 
 @app.post("/Making/emploeey")
-def making_emploeeys(* , token : str = Depends(token_check) , emploeey_data : Emploeey):
+def making_emploeeys(emploeey_data : Emploeey,
+                     db=Depends(get_conn),
+                     data=Depends(check_manager)):
+
+    conn , cursor = db
+
     name = emploeey_data.name
     familyname = emploeey_data.familyname
     email_address = emploeey_data.email_address
@@ -152,19 +171,14 @@ def making_emploeeys(* , token : str = Depends(token_check) , emploeey_data : Em
     manager_id = emploeey_data.manager_id
     personnel_code = emploeey_data.personnel_code
 
-    data = verify_token(token)
-    if data["role_id"] != 1:
-        raise HTTPException(status_code=403 , detail= "sorry.You dont have acsses for doing this")
-    else:
-        query = """INSERT INTO employees (name , familyname , email_address ,
-                   mobile , hire_date , role_id , positionn_id , situation_id,
-                   department_id , manager_id , personnel_code)
-                   VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-        values = [name , familyname , email_address ,mobile , hire_date ,
-                  role_id , positionn_id , situation_id, department_id , 
-                  manager_id , personnel_code]
+    query = """INSERT INTO employees (name , familyname , email_address ,
+            mobile , hire_date , role_id , positionn_id , situation_id,
+            department_id , manager_id , personnel_code)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+    values = [name , familyname , email_address ,mobile , hire_date ,
+            role_id , positionn_id , situation_id, department_id , 
+            manager_id , personnel_code]
+    cursor.execute(query , values)
+    conn.commit()
+    return {"Massage" : "The emploeey aded succsesfuly"}
 
-        cursor.execute(query , values)
-        connection.commit()
-
-        return {"Massage" : "The emploeey aded succsesfuly"}
