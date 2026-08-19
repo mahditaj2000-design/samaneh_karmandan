@@ -33,7 +33,7 @@ class EnrollmentData(BaseModel):
     username : str
     password : str
 
-class Emploeey(BaseModel):
+class employee(BaseModel):
     name : str
     familyname : str
     email_address : str = None
@@ -76,6 +76,10 @@ def check_manager(token = Depends(token_man)):
     data = verify_token(token)  
     if data["role_id"] != 1:
         raise HTTPException(status_code=403 , detail= "sorry.You dont have acsses for doing this")
+    return data
+
+def token_check(token=Depends(token_man)):
+    data = verify_token(token)
     return data
 
 app = FastAPI()
@@ -127,7 +131,7 @@ def enrollment_user(user_data : EnrollmentData , db=Depends(get_conn)):
     ress = cursor.fetchone()
 
     if ress is not None :
-        raise HTTPException(status_code=400 , detail="The emploeey_id you choos is already exists")
+        raise HTTPException(status_code=400 , detail="The employee_id you choos is already exists")
     if username == "" or password == "" :
         raise HTTPException(status_code=400 , detail="Wrong username or password")
     if password in common_passwords or len(password)<8 :
@@ -152,24 +156,24 @@ def enrollment_user(user_data : EnrollmentData , db=Depends(get_conn)):
 
     return {"Massage" : f"Welcome to The Samaneh Karmandan {username}"}
 
-@app.post("/Making/emploeey")
-def making_emploeeys(emploeey_data : Emploeey,
+@app.post("/Making/employee")
+def making_employees(employee_data : employee,
                      db=Depends(get_conn),
                      data=Depends(check_manager)):
 
     conn , cursor = db
 
-    name = emploeey_data.name
-    familyname = emploeey_data.familyname
-    email_address = emploeey_data.email_address
-    mobile = emploeey_data.mobile
-    hire_date = emploeey_data.hire_date
-    role_id = emploeey_data.role_id
-    positionn_id = emploeey_data.positionn_id
-    situation_id = emploeey_data.situation_id
-    department_id = emploeey_data.department_id
-    manager_id = emploeey_data.manager_id
-    personnel_code = emploeey_data.personnel_code
+    name = employee_data.name
+    familyname = employee_data.familyname
+    email_address = employee_data.email_address
+    mobile = employee_data.mobile
+    hire_date = employee_data.hire_date
+    role_id = employee_data.role_id
+    positionn_id = employee_data.positionn_id
+    situation_id = employee_data.situation_id
+    department_id = employee_data.department_id
+    manager_id = employee_data.manager_id
+    personnel_code = employee_data.personnel_code
 
     query = """INSERT INTO employees (name , familyname , email_address ,
             mobile , hire_date , role_id , positionn_id , situation_id,
@@ -180,5 +184,32 @@ def making_emploeeys(emploeey_data : Emploeey,
             manager_id , personnel_code]
     cursor.execute(query , values)
     conn.commit()
-    return {"Massage" : "The emploeey aded succsesfuly"}
+    return {"Massage" : "The employee aded succsesfuly"}
+
+@app.get("/get_employees")
+def get_employees(db=Depends(get_conn) , data=Depends(token_check)):
+    conn , cursor = db
+
+    query = """SELECT * FROM employees"""
+    cursor.execute(query)
+    res = cursor.fetchall()
+
+    return {"Massage":"عملیات با موفقیت انجام شد" , "result":res}
+
+@app.get("/get_me")
+def get_me(db=Depends(get_conn) , data=Depends(token_check)):
+    conn , cursor = db
+
+    query = """SELECT employees.*
+    FROM users
+    JOIN employees ON users.employee_id = employees.id
+    WHERE users.username = %s"""
+    value = [data["username"]]
+
+    cursor.execute(query, value)
+    result = cursor.fetchone()
+    if result is None:
+        raise HTTPException(status_code=404, detail="Employee record not found")
+
+    return {"Massage":"عملیات با موفقیت انجام شد" , "res":result}
 
