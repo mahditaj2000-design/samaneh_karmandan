@@ -1,5 +1,10 @@
-from connection import cursor,connection,mariadb
+from connection import pool,mariadb
 
+connection = None
+cursor = None
+
+connection = pool.get_connection()
+cursor = connection.cursor()
 try:
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS roles (

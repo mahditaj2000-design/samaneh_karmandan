@@ -54,6 +54,29 @@ if not SECRET_KEY:
 ALGORITHEM = "HS256"
 token_man = OAuth2PasswordBearer(tokenUrl="/enter/auth")
 
+def false_enter(username: str, conn, cursor):
+
+    query = """
+    INSERT INTO login_attempts
+    (username, attempt_time, success)
+    VALUES (%s, NOW(), FALSE)
+    """
+
+    cursor.execute(query, [username])
+    conn.commit()
+
+def true_enter(username:str , conn , cursor):
+
+    query = """
+    INSERT INTO login_attempts
+    (username, attempt_time, success)
+    VALUES (%s, NOW(), TRUE)
+    """
+
+    cursor.execute(query, [username])
+    conn.commit()
+
+
 def get_conn():
     conn = pool.get_connection()
     cursor = conn.cursor()
@@ -108,6 +131,11 @@ def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(ge
     cursor.execute(query, [username])
     failed_count = cursor.fetchone()[0]
 
+    if failed_count>=4:
+        raise HTTPException(status_code=429 , detail="""تعداد تلاش های ناموفق شما بیش از 4 بار بود.
+          لطفا بعدا تلاش کنید""")
+
+
     query = """SELECT users.pass_hash , employees.role_id
     FROM users
     JOIN employees ON employees.id = users.employee_id
@@ -118,15 +146,19 @@ def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(ge
     res = cursor.fetchone()
 
     if res is None:
-        raise HTTPException(status_code=401 , detail="Wronge username or password")
+            false_enter(username , conn , cursor)
+            raise HTTPException(status_code=401 , detail="Wronge username or password")
+    
     else:
         result = bcrypt.checkpw(password.encode() , res[0].encode())
         if result is False:
+            false_enter(username , conn , cursor)
             raise HTTPException(status_code=401 , detail="Wronge username or password")
         else:
             if res[1] < 1 or res[1] > 2 :
                 raise HTTPException(status_code=401 , detail="Wronge username or password")
             else:
+                true_enter(username , conn , cursor)
                 token = create_token({"username":username , "role_id":res[1]})
                 return {
                        "Massage":"Wellcome to samaneh karmandan","access_token":token , "token_type":"bearer"
