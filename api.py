@@ -1,8 +1,9 @@
 from fastapi import FastAPI , HTTPException , Depends
 from fastapi.security import OAuth2PasswordBearer , OAuth2PasswordRequestForm
-from pydantic import BaseModel
+from pydantic import BaseModel , Field
 from connection import pool , mariadb
 import jwt
+from jwt import InvalidTokenError, ExpiredSignatureError
 from datetime import datetime , timedelta , timezone , date
 import bcrypt
 from dotenv import load_dotenv
@@ -48,6 +49,8 @@ class employee(BaseModel):
 
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY is missing")
 ALGORITHEM = "HS256"
 token_man = OAuth2PasswordBearer(tokenUrl="/enter/auth")
 
@@ -69,8 +72,10 @@ def verify_token(token : str):
     try:
         data = jwt.decode(token , SECRET_KEY , algorithms=[ALGORITHEM])
         return data
-    except:
-        raise HTTPException(status_code=401 , detail="Invalid OR expierd token")
+    except ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Expired TOKEN")
+    except InvalidTokenError:
+        raise HTTPException(status_code=401 , detail="Invalid TOKEN")
 
 def check_manager(token = Depends(token_man)):
     data = verify_token(token)  
@@ -92,6 +97,17 @@ def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(ge
     username = Form_data.username
     password = Form_data.password
 
+    query = """
+    SELECT COUNT(*)
+    FROM login_attempts
+    WHERE username = %s
+    AND success = FALSE
+    AND attempt_time > NOW() - INTERVAL 10 MINUTE
+    """
+
+    cursor.execute(query, [username])
+    failed_count = cursor.fetchone()[0]
+
     query = """SELECT users.pass_hash , employees.role_id
     FROM users
     JOIN employees ON employees.id = users.employee_id
@@ -102,14 +118,14 @@ def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(ge
     res = cursor.fetchone()
 
     if res is None:
-        raise HTTPException(status_code=401 , detail="This username dosnt exists")
+        raise HTTPException(status_code=401 , detail="Wronge username or password")
     else:
         result = bcrypt.checkpw(password.encode() , res[0].encode())
         if result is False:
-            raise HTTPException(status_code=400 , detail="password is wrong")
+            raise HTTPException(status_code=401 , detail="Wronge username or password")
         else:
             if res[1] < 1 or res[1] > 2 :
-                raise HTTPException(status_code=403 , detail="You dont have access")
+                raise HTTPException(status_code=401 , detail="Wronge username or password")
             else:
                 token = create_token({"username":username , "role_id":res[1]})
                 return {
@@ -117,7 +133,7 @@ def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(ge
                     }
 
 @app.post("/user/enrollment")
-def enrollment_user(user_data : EnrollmentData , db=Depends(get_conn)):
+def enrollment_user(user_data : EnrollmentData , db=Depends(get_conn) , data=Depends(check_manager)):
 
     conn , cursor = db
 
@@ -187,7 +203,7 @@ def making_employees(employee_data : employee,
     return {"Massage" : "The employee aded succsesfuly"}
 
 @app.get("/get_employees")
-def get_employees(db=Depends(get_conn) , data=Depends(token_check)):
+def get_employees(db=Depends(get_conn) , data=Depends(check_manager)):
     conn , cursor = db
 
     query = """SELECT * FROM employees"""

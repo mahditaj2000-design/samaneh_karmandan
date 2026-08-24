@@ -61,6 +61,13 @@ try:
 
     ENGINE=InnoDB""")
 
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS login_attempts(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    attempt_time DATETIME NOT NULL,
+    success BOOLEAN NOT NULL)""")
+
     connection.commit()
     print("opperation succied")
 except mariadb.Error as e:
