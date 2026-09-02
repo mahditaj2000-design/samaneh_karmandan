@@ -8,6 +8,7 @@ from datetime import datetime , timedelta , timezone , date
 import bcrypt
 from dotenv import load_dotenv
 import os
+from typing import Optional
 
 common_passwords = [
     "password", "123456", "123456789", "12345678", "12345", "1234567",
@@ -34,6 +35,20 @@ class EnrollmentData(BaseModel):
     username : str
     password : str
 
+
+class search_data(BaseModel):
+    name : Optional[str] = None
+    familyname : Optional[str] = None
+    email_address : Optional[str] = None
+    mobile : Optional[str] = None
+    hire_date : Optional[date] = None
+    role_id : Optional[int] = None
+    positionn_id : Optional[int] = None
+    situation_id : Optional[int] = None
+    department_id : Optional[int] = None
+    manager_id : Optional[int] = None
+    personnel_code : Optional[str] = None
+
 class employee(BaseModel):
     name : str
     familyname : str
@@ -53,6 +68,30 @@ if not SECRET_KEY:
     raise RuntimeError("SECRET_KEY is missing")
 ALGORITHEM = "HS256"
 token_man = OAuth2PasswordBearer(tokenUrl="/enter/auth")
+
+def search_data_fillter(name:str=None,
+familyname:str=None,
+email_address:str=None,
+mobile:str=None,
+hire_date:date=None,
+role_id:int=None,
+positionn_id:int=None,
+situation_id:int=None,
+department_id:int=None,
+manager_id:int=None,
+personnel_code:str=None):
+
+    return search_data(name=name,
+    familyname=familyname,
+    email_address=email_address,
+    mobile=mobile,
+    hire_date=hire_date,
+    role_id=role_id,
+    positionn_id=positionn_id,
+    situation_id=situation_id,
+    department_id=department_id,
+    manager_id=manager_id,
+    personnel_code=personnel_code)
 
 def false_enter(username: str, conn, cursor):
 
@@ -237,7 +276,6 @@ def making_employees(employee_data : employee,
 @app.get("/get_employees")
 def get_employees(db=Depends(get_conn) , data=Depends(check_manager)):
     conn , cursor = db
-
     query = """SELECT * FROM employees"""
     cursor.execute(query)
     res = cursor.fetchall()
@@ -261,3 +299,111 @@ def get_me(db=Depends(get_conn) , data=Depends(token_check)):
 
     return {"Massage":"عملیات با موفقیت انجام شد" , "res":result}
 
+@app.get("/search_employee")
+def search(search_data=Depends(search_data_fillter) , db=Depends(get_conn) , data=Depends(token_check)):
+    conn , cursor = db
+
+    condition = []
+    value = []
+
+    quary = """SELECT * FROM employees WHERE """
+
+    if search_data.name:
+        condition.append("name = %s")
+        value.append(search_data.name)
+
+    if search_data.familyname:
+        condition.append("familyname = %s")
+        value.append(search_data.familyname)
+
+    if search_data.email_address:
+        condition.append("email_address = %s")
+        value.append(search_data.email_address)
+
+    if search_data.mobile:
+        condition.append("mobile = %s")
+        value.append(search_data.mobile)
+
+    if search_data.hire_date:
+        condition.append("hire_date = %s")
+        value.append(search_data.hire_date)
+
+    if search_data.role_id:
+        condition.append("role_id = %s")
+        value.append(search_data.role_id)
+
+    if search_data.positionn_id:
+        condition.append("positionn_id = %s")
+        value.append(search_data.positionn_id)
+
+    if search_data.situation_id:
+        condition.append("situation_id = %s")
+        value.append(search_data.situation_id)
+
+    if search_data.department_id:
+        condition.append("department_id = %s")
+        value.append(search_data.department_id)
+
+    if search_data.manager_id:
+        condition.append("manager_id = %s")
+        value.append(search_data.manager_id)
+
+    if search_data.personnel_code:
+        condition.append("personnel_code = %s")
+        value.append(search_data.personnel_code)
+
+    if condition:
+
+        quary+= " AND ".join(condition)
+
+        cursor.execute(quary , value)
+        res = cursor.fetchall()
+        
+        return {"Massage":f"{res}"}
+
+    else:
+        return{"Massage":"لطفا یک فیلتر انتخاب کنید"}
+
+@app.delete("/delete_employee")
+def delete_employee(personnel_code:str,db=Depends(get_conn) , data=Depends(check_manager)):
+    conn , cursor = db
+
+    value = [personnel_code]
+    cursor.execute(("""SELECT * FROM employees WHERE personnel_code = %s""") , value)
+    res = cursor.fetchall() #اصلا یه همچین کارمندی هست؟
+    cursor.execute(("""SELECT id FROM employees WHERE personnel_code = %s""") , value)
+    res2 = cursor.fetchone() #اگر یه همچین کارمندی باشه حالا id اون رو داریم
+
+    if res:
+
+        quary = """SELECT * FROM users WHERE employee_id = %s"""
+        value1 = res2
+
+        cursor.execute(quary , value1)
+        res3 = cursor.fetchall()
+
+    else:
+        return {"Massage":"کارمند مورد نظر یافت نشد"}
+    
+    if res3:
+
+        quary = """DELETE FROM users WHERE employee_id = %s"""
+        value2 = res2
+        cursor.execute(quary , value2)
+        conn.commit()
+        
+        quary = """DELETE FROM employees WHERE personnel_code = %s"""
+        value3 = [personnel_code]
+        cursor.execute(quary , value3)
+        conn.commit()
+
+        return {"Massage":"کارمند مورد نظر با موفقیت از لیست کارمندان حذف شد"}
+
+    if res and not res3:
+
+        quary = """DELETE FROM employees WHERE personnel_code = %s"""
+        value4 = [personnel_code]
+        cursor.execute(quary , value4)
+        conn.commit()
+
+        return {"Massage":"کارمند مورد نظر با موفقیت حذف شد"}
