@@ -62,6 +62,19 @@ class employee(BaseModel):
     manager_id : int = None
     personnel_code : str
 
+class EmployeeResponse(BaseModel):
+    name : Optional[str] = None
+    familyname : Optional[str] = None
+    email_address : Optional[str] = None
+    mobile : Optional[str] = None
+    hire_date : Optional[date] = None
+    role_id : Optional[int] = None
+    positionn_id : Optional[int] = None
+    situation_id : Optional[int] = None
+    department_id : Optional[int] = None
+    manager_id : Optional[int] = None
+    personnel_code : Optional[str] = None
+
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
@@ -407,3 +420,100 @@ def delete_employee(personnel_code:str,db=Depends(get_conn) , data=Depends(check
         conn.commit()
 
         return {"Massage":"کارمند مورد نظر با موفقیت حذف شد"}
+
+@app.patch("/edit_employee")
+def edit_employee(new_data:search_data , employee_id:int , db=Depends(get_conn) , data=Depends(check_manager)):
+    conn , cursor = db
+
+    set_data = []
+    value = []
+
+    quary1 = """UPDATE employees SET """
+    quary2 = """ WHERE id = %s"""
+    
+    if new_data.name:
+        set_data.append("name = %s")
+        value.append(new_data.name)
+
+    if new_data.familyname:
+        set_data.append("familyname = %s")
+        value.append(new_data.familyname)
+
+    if new_data.email_address:
+        set_data.append("email_address = %s")
+        value.append(new_data.email_address)
+
+    if new_data.mobile:
+        set_data.append("mobile = %s")
+        value.append(new_data.mobile)
+
+    if new_data.hire_date:
+        set_data.append("hire_date = %s")
+        value.append(new_data.hire_date)
+
+    if new_data.role_id:
+        set_data.append("role_id = %s")
+        value.append(new_data.role_id)
+
+    if new_data.positionn_id:
+        set_data.append("positionn_id = %s")
+        value.append(new_data.positionn_id)
+
+    if new_data.situation_id:
+        set_data.append("situation_id = %s")
+        value.append(new_data.situation_id)
+
+    if new_data.department_id:
+        set_data.append("department_id = %s")
+        value.append(new_data.department_id)
+
+    if new_data.manager_id:
+        set_data.append("manager_id = %s")
+        value.append(new_data.manager_id)
+
+    if new_data.personnel_code:
+        set_data.append("personnel_code = %s")
+        value.append(new_data.personnel_code)
+
+    if set_data:
+
+        quary = quary1 + ", ".join(set_data)+ quary2
+        value.append(employee_id)
+
+        cursor.execute(quary , value)
+        conn.commit()
+        
+        return {"Massage":"عملیات با موفقیت انجام شد"}
+    
+    else:
+        raise HTTPException(status_code=400 , detail="لطفا حداقل یک فیلد را تغییر دهید")
+    
+@app.get("/get_employee" , response_model=EmployeeResponse)
+def get_employee(employee_id:int , db=Depends(get_conn) , data=Depends(check_manager)):
+    conn , cursor = db
+
+    query = """SELECT * FROM employees WHERE id = %s"""
+    value = [employee_id]
+
+    cursor.execute(query , value)
+    res = cursor.fetchone()
+
+    if res:
+        employee = {
+        "id": res[0],
+        "name": res[1],
+        "familyname": res[2],
+        "email_address": res[3],
+        "mobile": res[4],
+        "hire_date": res[5],
+        "role_id": res[6],
+        "positionn_id": res[7],
+        "situation_id": res[8],
+        "department_id": res[9],
+        "manager_id": res[10],
+        "personnel_code": res[11]
+        }
+        return employee
+
+    else:
+        raise HTTPException(status_code=404  , detail="کارمند مورد نظر یافت نشد")
