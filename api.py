@@ -35,7 +35,6 @@ class EnrollmentData(BaseModel):
     username : str
     password : str
 
-
 class search_data(BaseModel):
     name : Optional[str] = None
     familyname : Optional[str] = None
@@ -74,6 +73,10 @@ class EmployeeResponse(BaseModel):
     department_id : Optional[int] = None
     manager_id : Optional[int] = None
     personnel_code : Optional[str] = None
+
+class ChangePassword(BaseModel):
+    old_password:str
+    new_password:str
 
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -312,7 +315,7 @@ def get_me(db=Depends(get_conn) , data=Depends(token_check)):
 
     return {"Massage":"عملیات با موفقیت انجام شد" , "res":result}
 
-@app.get("/search_employee")
+@app.get("/search_employee" , response_model=list[EmployeeResponse])
 def search(search_data=Depends(search_data_fillter) , db=Depends(get_conn) , data=Depends(token_check)):
     conn , cursor = db
 
@@ -371,11 +374,29 @@ def search(search_data=Depends(search_data_fillter) , db=Depends(get_conn) , dat
 
         cursor.execute(quary , value)
         res = cursor.fetchall()
-        
-        return {"Massage":f"{res}"}
-
     else:
-        return{"Massage":"لطفا یک فیلتر انتخاب کنید"}
+        raise HTTPException(status_code=400 , detail="لطفا یک فیلتر انتخاب کنید")
+
+        employees = []
+
+    for employee in res:
+        employees.append({
+            "id": employee[0],
+            "name": employee[1],
+            "familyname": employee[2],
+            "email_address": employee[3],
+            "mobile": employee[4],
+            "hire_date": employee[5],
+            "role_id": employee[6],
+            "positionn_id": employee[7],
+            "situation_id": employee[8],
+            "department_id": employee[9],
+            "manager_id": employee[10],
+            "personnel_code": employee[11]
+        })
+
+    return employees
+        
 
 @app.delete("/delete_employee")
 def delete_employee(personnel_code:str,db=Depends(get_conn) , data=Depends(check_manager)):
@@ -517,3 +538,38 @@ def get_employee(employee_id:int , db=Depends(get_conn) , data=Depends(check_man
 
     else:
         raise HTTPException(status_code=404  , detail="کارمند مورد نظر یافت نشد")
+
+@app.patch("/change_password")
+def change_password(password_data:ChangePassword , db=Depends(get_conn) , data=Depends(check_manager)):
+    conn , cursor = db
+    
+    old_pass = password_data.old_password
+    new_pass = password_data.new_password
+
+    username = data["username"]
+
+    query = """SELECT pass_hash FROM users WHERE username = %s"""
+    value = [username]
+
+    cursor.execute(query , value)
+    res = cursor.fetchone()
+
+    if not res:
+        raise HTTPException(status_code=400, detail="کاربر یافت نشد")
+
+    pass_hash = res[0]
+
+    res = bcrypt.checkpw(old_pass.encode() , pass_hash.encode())
+
+    if res is False:
+        raise HTTPException(status_code=400 , detail="پسورد قبلی خود را اشتباه وارد کرده اید")
+    else:
+        password = bcrypt.hashpw(new_pass.encode() , bcrypt.gensalt()).decode()
+
+        query1 = """UPDATE users SET pass_hash = %s WHERE username = %s"""
+        value1 = [password , username]
+
+        cursor.execute(query1 , value1)
+        conn.commit()
+
+        return {"Message":"رمز شما با موفقیت تغییر کرد"}
