@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>login_page</class>
+ <widget class="QWidget" name="login_page">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="background_widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>1200</width>
+       <height>800</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1200</width>
+       <height>800</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LayoutDirection::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#background_widget {
+    background-image: url(:/images/back.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>400</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="login_card" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>400</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#login_card {
+    background-color: rgba(255, 255, 255, 150);
+    border-radius: 20px;
+}</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>20</number>
+         </property>
+         <property name="leftMargin">
+          <number>50</number>
+         </property>
+         <property name="topMargin">
+          <number>50</number>
+         </property>
+         <property name="rightMargin">
+          <number>50</number>
+         </property>
+         <property name="bottomMargin">
+          <number>50</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0">
+           <property name="spacing">
+            <number>6</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>50</number>
+           </property>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>120</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>90</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    border-radius: 40px;
+    background-color: transparent;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../../resources/adam_logo_image.qrc">:/images/Adamak.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLineEdit" name="username_lineedit">
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    border: 1px solid #cccccc;
+    border-radius: 12px;
+    padding: 8px;
+    background-color: rgba(255,255,255,120);
+}
+
+QLineEdit:hover {
+    border: 2px solid #60A5FA;
+}
+
+QLineEdit:focus {
+    border: 2px solid #3B82F6;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="placeholderText">
+              <string comment="نام کاربری" extracomment="نام کاربری">Username</string>
+             </property>
+             <property name="cursorMoveStyle">
+              <enum>Qt::CursorMoveStyle::LogicalMoveStyle</enum>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLineEdit" name="password_lineedit">
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::RightToLeft</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    border: 1px solid #cccccc;
+    border-radius: 12px;
+    padding: 8px;
+    background-color: rgba(255,255,255,120);
+}
+
+QLineEdit:hover {
+    border: 2px solid #60A5FA;
+}
+
+QLineEdit:focus {
+    border: 2px solid #3B82F6;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="echoMode">
+              <enum>QLineEdit::EchoMode::Password</enum>
+             </property>
+             <property name="placeholderText">
+              <string>Password</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QPushButton" name="login_button">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::LeftToRight</enum>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton#login_button {
+    background-color: #3B82F6;
+    color: white;
+    border-radius: 20px;
+}
+
+QPushButton#login_button:hover {
+    background-color: #2563EB;
+}
+
+QPushButton#login_button:pressed {
+    background-color: #1D4ED8;
+}</string>
+             </property>
+             <property name="inputMethodHints">
+              <set>Qt::InputMethodHint::ImhNone</set>
+             </property>
+             <property name="text">
+              <string>LOGIN</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>16</width>
+               <height>15</height>
+              </size>
+             </property>
+             <property name="autoDefault">
+              <bool>false</bool>
+             </property>
+             <property name="default">
+              <bool>false</bool>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../resources/back_ground_image.qrc"/>
+  <include location="../../resources/adam_logo_image.qrc"/>
+ </resources>
+ <connections/>
+</ui>

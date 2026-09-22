@@ -168,12 +168,12 @@ def token_check(token=Depends(token_man)):
 app = FastAPI()
 
 @app.post("/enter/auth")
-def enter_user(Form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(get_conn)):
+def enter_user(form_data : OAuth2PasswordRequestForm = Depends() , db=Depends(get_conn)):
 
     conn , cursor = db
 
-    username = Form_data.username
-    password = Form_data.password
+    username = form_data.username
+    password = form_data.password
 
     query = """
     SELECT COUNT(*)
@@ -377,7 +377,7 @@ def search(search_data=Depends(search_data_fillter) , db=Depends(get_conn) , dat
     else:
         raise HTTPException(status_code=400 , detail="لطفا یک فیلتر انتخاب کنید")
 
-        employees = []
+    employees = []
 
     for employee in res:
         employees.append({
@@ -508,6 +508,71 @@ def edit_employee(new_data:search_data , employee_id:int , db=Depends(get_conn) 
     
     else:
         raise HTTPException(status_code=400 , detail="لطفا حداقل یک فیلد را تغییر دهید")
+
+@app.patch("/edit_my_prof")
+def edit_my_prof(new_data: search_data, db=Depends(get_conn),data=Depends(token_check)):
+    conn, cursor = db
+
+    username = data["username"]
+
+    query = """
+    SELECT employee_id
+    FROM users
+    WHERE username = %s
+    """
+
+    cursor.execute(query, [username])
+
+    employee_id = cursor.fetchone()
+
+    if employee_id is None:
+        raise HTTPException(
+            status_code=404,
+            detail="کارمند مرتبط با این حساب پیدا نشد"
+        )
+
+    employee_id = employee_id[0]
+
+    set_data = []
+    value = []
+
+    if new_data.name:
+        set_data.append("name = %s")
+        value.append(new_data.name)
+
+    if new_data.familyname:
+        set_data.append("familyname = %s")
+        value.append(new_data.familyname)
+
+    if new_data.email_address:
+        set_data.append("email_address = %s")
+        value.append(new_data.email_address)
+
+    if new_data.mobile:
+        set_data.append("mobile = %s")
+        value.append(new_data.mobile)
+
+    if set_data:
+
+        query = """
+        UPDATE employees SET
+        """ + ", ".join(set_data) + """
+        WHERE id = %s
+        """
+
+        value.append(employee_id)
+
+        cursor.execute(query, value)
+        conn.commit()
+
+        return {
+            "Message":"اطلاعات شما با موفقیت تغییر کرد"
+        }
+
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="حداقل یک مقدار باید تغییر کند")
     
 @app.get("/get_employee" , response_model=EmployeeResponse)
 def get_employee(employee_id:int , db=Depends(get_conn) , data=Depends(check_manager)):
@@ -540,7 +605,7 @@ def get_employee(employee_id:int , db=Depends(get_conn) , data=Depends(check_man
         raise HTTPException(status_code=404  , detail="کارمند مورد نظر یافت نشد")
 
 @app.patch("/change_password")
-def change_password(password_data:ChangePassword , db=Depends(get_conn) , data=Depends(check_manager)):
+def change_password(password_data:ChangePassword , db=Depends(get_conn) , data=Depends(token_check)):
     conn , cursor = db
     
     old_pass = password_data.old_password
@@ -573,3 +638,22 @@ def change_password(password_data:ChangePassword , db=Depends(get_conn) , data=D
         conn.commit()
 
         return {"Message":"رمز شما با موفقیت تغییر کرد"}
+
+@app.get("/tedad_users_employees")
+def tedad_users_employees(db=Depends(get_conn) , data=Depends(token_check)):
+    conn, cursor = db
+
+    cursor.execute("SELECT COUNT(*) FROM employees")
+
+    employees_count = cursor.fetchone()[0]
+
+
+    cursor.execute("SELECT COUNT(*) FROM users")
+
+    users_count = cursor.fetchone()[0]
+
+
+    return {
+        "employees_count": employees_count,
+        "users_count": users_count
+    }

@@ -1,0 +1,2129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainDashbord</class>
+ <widget class="QMainWindow" name="MainDashbord">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1280</width>
+    <height>893</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>850</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1280</width>
+    <height>893</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+QWidget#centralwidget {
+    background-image: url(:/images/main_window_background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>1280</width>
+     <height>850</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1280</width>
+     <height>850</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+QWidget#centralwidget {
+    background-image: url(:/images/main_window_background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_main">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget_main">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget#stackedWidget_main {
+    background-color: rgba(255, 255, 255, 35);
+    border: 1px solid rgba(255, 255, 255, 90);
+    border-radius: 28px;
+}</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="dashboard_page">
+       <widget class="QWidget" name="title_dash_widget" native="true">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>990</width>
+          <height>130</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>990</width>
+          <height>130</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>990</width>
+          <height>130</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+        </property>
+        <widget class="QWidget" name="horizontalLayoutWidget_2">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>972</width>
+           <height>92</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="sizeConstraint">
+           <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="date_layout">
+            <item>
+             <widget class="QLabel" name="clock_label">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string>8:52</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>10</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>10</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="date_label">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 14px;
+    font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string>چهارشنبه 25 شهریور 1405</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>300</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="right_title_dash">
+            <property name="sizeConstraint">
+             <enum>QLayout::SizeConstraint::SetFixedSize</enum>
+            </property>
+            <item>
+             <widget class="QLabel" name="modiriat_label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>220</width>
+                <height>100</height>
+               </size>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LayoutDirection::RightToLeft</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string>سامانه مدیریت کارمندان</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Modiriat_discrip_label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>300</width>
+                <height>200</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 12px;
+    font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string>مشاهده، جستجو و مدیریت اطلاعات کارکنان سازمان</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_4">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>60</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>60</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LayoutDirection::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="pixmap">
+             <pixmap resource="../../resources/home_icon.qrc">:/images/c060a5ea-0698-4df2-bf98-bf5b92f713d1.png</pixmap>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Orientation::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_3">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>180</y>
+          <width>981</width>
+          <height>111</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QWidget" name="users_widget" native="true">
+           <property name="styleSheet">
+            <string notr="true">QWidget#users_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+           </property>
+           <widget class="QLabel" name="label_5">
+            <property name="geometry">
+             <rect>
+              <x>320</x>
+              <y>10</y>
+              <width>119</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 15px;
+    font-weight: bold;
+}</string>
+            </property>
+            <property name="text">
+             <string>تعداد کاربران</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_6">
+            <property name="geometry">
+             <rect>
+              <x>360</x>
+              <y>50</y>
+              <width>42</width>
+              <height>46</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}</string>
+            </property>
+            <property name="text">
+             <string>3</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_7">
+            <property name="geometry">
+             <rect>
+              <x>30</x>
+              <y>20</y>
+              <width>71</width>
+              <height>71</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>71</width>
+              <height>71</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>71</width>
+              <height>71</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel{
+    border-image: url(:/images/9da65888-5452-42cc-99a5-c43c5d1c1e25.png);
+    border-radius: 40px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextInteractionFlag::LinksAccessibleByMouse</set>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="karmandan_widget" native="true">
+           <property name="styleSheet">
+            <string notr="true">QWidget#karmandan_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+           </property>
+           <widget class="QLabel" name="label_2">
+            <property name="geometry">
+             <rect>
+              <x>310</x>
+              <y>10</y>
+              <width>119</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 15px;
+    font-weight: bold;
+}</string>
+            </property>
+            <property name="text">
+             <string>تعداد کارمندان</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_3">
+            <property name="geometry">
+             <rect>
+              <x>350</x>
+              <y>50</y>
+              <width>42</width>
+              <height>46</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}</string>
+            </property>
+            <property name="text">
+             <string>56</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignCenter</set>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_4">
+            <property name="geometry">
+             <rect>
+              <x>40</x>
+              <y>20</y>
+              <width>71</width>
+              <height>71</height>
+             </rect>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>71</width>
+              <height>71</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>71</width>
+              <height>71</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLabel{
+    border-image: url(:/images/b2e30a1c-78b2-484d-9e76-eeb775bf3efe.png);
+    border-radius: 40px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::TextInteractionFlag::LinksAccessibleByMouse</set>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="portabel_widget" native="true">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>310</y>
+          <width>961</width>
+          <height>461</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QWidget#portabel_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+        </property>
+        <widget class="QWidget" name="name_widget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>50</y>
+           <width>271</width>
+           <height>351</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget#name_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+         </property>
+         <widget class="QWidget" name="username_widget" native="true">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>200</y>
+            <width>231</width>
+            <height>61</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QWidget#username_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+          </property>
+          <widget class="QLabel" name="label_17">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>41</width>
+             <height>41</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel {
+    border-image: url(:/images/c1bb0dc2-6c77-4b23-a630-8768d3a59f12.png);
+    border-radius: 40px;
+}</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QWidget" name="layoutWidget_3">
+           <property name="geometry">
+            <rect>
+             <x>70</x>
+             <y>10</y>
+             <width>157</width>
+             <height>42</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_16">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string>Mahdi</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_8">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+              </property>
+              <property name="text">
+               <string>نام کاربری:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>130</y>
+            <width>250</width>
+            <height>60</height>
+           </rect>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>250</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>250</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}</string>
+          </property>
+          <property name="text">
+           <string>مهدی تاج آبادی</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QLabel" name="logo_label_2">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>20</y>
+            <width>110</width>
+            <height>110</height>
+           </rect>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>110</width>
+            <height>110</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>110</width>
+            <height>110</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLabel{
+    border-image: url(:/images/Adamak_main.png);
+    border-radius: 40px;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="changes_but">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>280</y>
+            <width>121</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton#changes_but {
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* حالت غیرفعال */
+QPushButton#changes_but:disabled {
+    background-color: rgba(120,120,120,120);
+    color: rgba(255,255,255,170);
+    border: 1px solid rgba(255,255,255,80);
+    border-radius: 15px;
+}
+
+/* حالت فعال */
+QPushButton#changes_but:enabled {
+    background-color: rgba(40,130,255,170);
+    color: white;
+    border: 1px solid rgba(150,210,255,180);
+    border-radius: 15px;
+}
+
+/* هاور */
+QPushButton#changes_but:enabled:hover {
+    background-color: rgba(40,130,255,220);
+    border-radius: 15px;
+}
+
+/* کلیک */
+QPushButton#changes_but:enabled:pressed {
+    background-color: rgba(20,90,220,220);
+    border-radius: 15px;
+}</string>
+          </property>
+          <property name="text">
+           <string>ذخیره تغییرات</string>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="info_widget" native="true">
+         <property name="geometry">
+          <rect>
+           <x>350</x>
+           <y>50</y>
+           <width>581</width>
+           <height>381</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QWidget#info_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+         </property>
+         <widget class="QWidget" name="passchanger_widget" native="true">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>260</y>
+            <width>541</width>
+            <height>91</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QWidget#passchanger_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+          </property>
+          <widget class="QWidget" name="layoutWidget_4">
+           <property name="geometry">
+            <rect>
+             <x>43</x>
+             <y>10</y>
+             <width>471</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QLabel" name="label_15">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    border-image: url(:/images/5cbcbe07-a8d4-4510-a98b-a5757c3c89dd.png);
+    border-radius: 40px;
+}</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_13">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_14">
+              <property name="styleSheet">
+               <string notr="true">QLabel {
+    color: #64748B;
+}</string>
+              </property>
+              <property name="text">
+               <string>برای افزایش امنیت حساب خود، رمز عبور
+را به‌صورت دوره‌ای تغییر دهید.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_12">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Policy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_change_password">
+              <property name="layoutDirection">
+               <enum>Qt::LayoutDirection::RightToLeft</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: rgba(255, 255, 255, 45);
+    color: #1E293B;
+    border: 1px solid rgba(255, 255, 255, 100);
+    border-radius: 14px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QPushButton#btn_change_password:hover {
+    background-color: rgba(255, 255, 255, 70);
+    border: 1px solid rgba(255, 120, 120, 160);
+}
+
+QPushButton#btn_change_password:pressed {
+    background-color: rgba(255, 100, 100, 80);
+    border: 1px solid rgba(255, 140, 140, 200);
+}</string>
+              </property>
+              <property name="text">
+               <string> تغییر رمز عبور  </string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_5">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>20</y>
+            <width>461</width>
+            <height>39</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_11">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+             </property>
+             <property name="text">
+              <string>نام خانوادگی</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Policy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>210</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_10">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+             </property>
+             <property name="text">
+              <string>نام</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_6">
+          <property name="geometry">
+           <rect>
+            <x>120</x>
+            <y>130</y>
+            <width>405</width>
+            <height>39</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_6">
+           <item>
+            <widget class="QLabel" name="label_13">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+             </property>
+             <property name="text">
+              <string>ایمیل</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Policy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>250</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_12">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    background-color: transparent;
+    color: #2a005b;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 13px;
+    font-weight: bold;
+}</string>
+             </property>
+             <property name="text">
+              <string>تلفن همراه</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_1">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>170</y>
+            <width>561</width>
+            <height>43</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QLineEdit" name="lineEdit_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>190</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    background-color: rgba(255, 255, 255, 45);
+    color: #1E293B;
+    border: 1px solid rgba(255, 255, 255, 100);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+QLineEdit:hover {
+    background-color: rgba(255, 255, 255, 70);
+    border: 1px solid rgba(255, 255, 255, 150);
+}
+
+QLineEdit:focus {
+    background-color: rgba(255, 255, 255, 90);
+    border: 1px solid rgba(80, 160, 255, 180);
+}</string>
+             </property>
+             <property name="text">
+              <string>mahditaj2000@gmail.com</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Policy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>180</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_3">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    background-color: rgba(255, 255, 255, 45);
+    color: #1E293B;
+    border: 1px solid rgba(255, 255, 255, 100);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+QLineEdit:hover {
+    background-color: rgba(255, 255, 255, 70);
+    border: 1px solid rgba(255, 255, 255, 150);
+}
+
+QLineEdit:focus {
+    background-color: rgba(255, 255, 255, 90);
+    border: 1px solid rgba(80, 160, 255, 180);
+}</string>
+             </property>
+             <property name="text">
+              <string>09129596597</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>60</y>
+            <width>521</width>
+            <height>43</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QLineEdit" name="lineEdit_2">
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    background-color: rgba(255, 255, 255, 45);
+    color: #1E293B;
+    border: 1px solid rgba(255, 255, 255, 100);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+QLineEdit:hover {
+    background-color: rgba(255, 255, 255, 70);
+    border: 1px solid rgba(255, 255, 255, 150);
+}
+
+QLineEdit:focus {
+    background-color: rgba(255, 255, 255, 90);
+    border: 1px solid rgba(80, 160, 255, 180);
+}</string>
+             </property>
+             <property name="text">
+              <string>تاج آبادی</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Policy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>145</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLineEdit {
+    background-color: rgba(255, 255, 255, 45);
+    color: #1E293B;
+    border: 1px solid rgba(255, 255, 255, 100);
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+QLineEdit:hover {
+    background-color: rgba(255, 255, 255, 70);
+    border: 1px solid rgba(255, 255, 255, 150);
+}
+
+QLineEdit:focus {
+    background-color: rgba(255, 255, 255, 90);
+    border: 1px solid rgba(80, 160, 255, 180);
+}</string>
+             </property>
+             <property name="text">
+              <string>مهدی</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_2"/>
+     </widget>
+    </item>
+    <item>
+     <widget class="QWidget" name="sidebar_widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>250</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>250</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LayoutDirection::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget#sidebar_widget {
+    background-color: rgba(255, 255, 255, 45);
+    border: 1px solid rgba(255, 255, 255, 110);
+    border-radius: 28px;
+}</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+         </property>
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QLabel" name="logo_label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>90</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QLabel#logo_label {
+    border-image: url(:/images/Adamak_main.png);
+    border-radius: 40px;
+}</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="user_name">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 80, 80, 70);
+    border: 1px solid rgba(255, 120, 120, 100);
+}
+
+QPushButton:pressed {
+    background-color: rgba(220, 60, 60, 100);
+    border: 1px solid rgba(255, 100, 100, 130);
+}</string>
+           </property>
+           <property name="text">
+            <string>تاج آبادی</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>50</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="dashbord_but">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>-1</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:checked  {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}
+QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:pressed {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}</string>
+           </property>
+           <property name="text">
+            <string>داشبورد</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/home_icon.qrc">
+             <normaloff>:/images/c060a5ea-0698-4df2-bf98-bf5b92f713d1.png</normaloff>:/images/c060a5ea-0698-4df2-bf98-bf5b92f713d1.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>50</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="employees_but">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:checked  {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}
+QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:pressed {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}</string>
+           </property>
+           <property name="text">
+            <string>کارمندان </string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/employees_logo_main.qrc">
+             <normaloff>:/images/b2e30a1c-78b2-484d-9e76-eeb775bf3efe.png</normaloff>:/images/b2e30a1c-78b2-484d-9e76-eeb775bf3efe.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="users_but">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:checked  {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}
+QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:pressed {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}</string>
+           </property>
+           <property name="text">
+            <string>کاربران </string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/user_logo_main.qrc">
+             <normaloff>:/images/9da65888-5452-42cc-99a5-c43c5d1c1e25.png</normaloff>:/images/9da65888-5452-42cc-99a5-c43c5d1c1e25.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="search_but">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:checked  {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}
+QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:pressed {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}</string>
+           </property>
+           <property name="text">
+            <string>جستجو  </string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/search_logo_main.qrc">
+             <normaloff>:/images/774e6bc4-0dbc-4e70-8131-c78affd14da3.png</normaloff>:/images/774e6bc4-0dbc-4e70-8131-c78affd14da3.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_5">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="report_but">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>60</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>-1</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:checked  {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}
+QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 255, 255, 50);
+    border: 1px solid rgba(255, 255, 255, 80);
+}
+
+QPushButton:pressed {
+    background-color: rgba(80, 160, 255, 120);
+    border: 1px solid rgba(120, 200, 255, 150);
+}</string>
+           </property>
+           <property name="text">
+            <string>تنظیمات</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/reports_logo_main.qrc">
+             <normaloff>:/images/934b5a52-04b2-4a9a-8704-d8186cc9c592.png</normaloff>:/images/934b5a52-04b2-4a9a-8704-d8186cc9c592.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>100</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="Line" name="line">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_7">
+           <property name="orientation">
+            <enum>Qt::Orientation::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Policy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>5</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="exit_but">
+           <property name="layoutDirection">
+            <enum>Qt::LayoutDirection::RightToLeft</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QPushButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-family: &quot;Segoe UI&quot;;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: rgba(255, 80, 80, 70);
+    border: 1px solid rgba(255, 120, 120, 100);
+}
+
+QPushButton:pressed {
+    background-color: rgba(220, 60, 60, 100);
+    border: 1px solid rgba(255, 100, 100, 130);
+}</string>
+           </property>
+           <property name="text">
+            <string>خروج از سامانه</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/exit_logo_main.qrc">
+             <normaloff>:/images/473d8bb0-c378-493d-99e6-c0e32c6497c6.png</normaloff>:/images/473d8bb0-c378-493d-99e6-c0e32c6497c6.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>40</width>
+             <height>40</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1280</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="../../resources/main_window_back.qrc"/>
+  <include location="../../resources/lock_image.qrc"/>
+  <include location="../../resources/adam_abi.qrc"/>
+  <include location="../../resources/exit_logo_main.qrc"/>
+  <include location="../../resources/reports_logo_main.qrc"/>
+  <include location="../../resources/user_logo_main.qrc"/>
+  <include location="../../resources/search_logo_main.qrc"/>
+  <include location="../../resources/employees_logo_main.qrc"/>
+  <include location="../../resources/home_icon.qrc"/>
+  <include location="../../resources/adam_logo_main.qrc"/>
+ </resources>
+ <connections/>
+</ui>
