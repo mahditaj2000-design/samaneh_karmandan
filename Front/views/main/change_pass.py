@@ -49,6 +49,7 @@ class ChangePass(QDialog , Ui_Dialog):
         }
 
         result = change_password(password_data)
+        print(result)
 
         if "Message" in result:
             QMessageBox.information(

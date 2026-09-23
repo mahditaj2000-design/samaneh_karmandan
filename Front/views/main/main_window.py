@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget , QMainWindow , QApplication , QMessageBox
 from .MainWindow import Ui_MainDashbord
-from services.API_client import get_me , edit_my_prof
+from services.API_client import get_me , edit_my_prof , tedad_users_employees
 from PySide6.QtCore import QTimer
 from datetime import datetime
 import jdatetime
@@ -69,7 +69,7 @@ class MainWindow(QMainWindow , Ui_MainDashbord):
 
         self.lineEdit_4.setText(self.employee_email)
 
-        self.label_16.setText(self.employee_name)
+        self.label_16.setText(self.employee_username)
 
         self.exit_but.clicked.connect(self.exit_program)
 
@@ -77,22 +77,52 @@ class MainWindow(QMainWindow , Ui_MainDashbord):
 
         self.btn_change_password.clicked.connect(self.open_change_pass)
 
+        self.tedad = tedad_users_employees()
+
+        self.tedad_employees = self.tedad["employees_count"]
+
+        self.tedad_users = self.tedad["users_count"]
+
+        self.label_3.setText(str(self.tedad_employees))
+
+        self.label_6.setText(str(self.tedad_users))
+
     def open_change_pass(self):
         
         self.change_password = ChangePass()
         self.change_password.exec()
 
     def send_my_edit_data(self):
+
         name = self.lineEdit.text()
         familyname = self.lineEdit_2.text()
         email_address = self.lineEdit_4.text()
         mobile = self.lineEdit_3.text()
 
-        new_data = {"name":name , "familyname":familyname , "email_address":email_address , "mobile":mobile}
+        new_data = {
+            "name": name,
+            "familyname": familyname,
+            "email_address": email_address,
+            "mobile": mobile
+        }
+
         result = edit_my_prof(new_data)
 
         if "Message" in result:
-            QMessageBox.information(self,"موفقیت",result["Message"])
+
+            QMessageBox.information(
+                self,
+                "موفقیت",
+                result["Message"]
+            )
+
+        else:
+
+            QMessageBox.warning(
+                self,
+                "عملیات ناموفق",
+                result.get("detail", "خطایی رخ داد")
+            )
     
 
     def update_datetime(self):

@@ -533,22 +533,32 @@ def edit_my_prof(new_data: search_data, db=Depends(get_conn),data=Depends(token_
 
     employee_id = employee_id[0]
 
+    query = """
+    SELECT name, familyname, email_address, mobile
+    FROM employees
+    WHERE id = %s
+    """
+
+    cursor.execute(query, [employee_id])
+
+    old_data = cursor.fetchone()
+
     set_data = []
     value = []
 
-    if new_data.name:
+    if new_data.name and new_data.name != old_data[0]:
         set_data.append("name = %s")
         value.append(new_data.name)
 
-    if new_data.familyname:
+    if new_data.familyname and new_data.familyname != old_data[1]:
         set_data.append("familyname = %s")
         value.append(new_data.familyname)
 
-    if new_data.email_address:
+    if new_data.email_address and new_data.email_address != old_data[2]:
         set_data.append("email_address = %s")
         value.append(new_data.email_address)
 
-    if new_data.mobile:
+    if new_data.mobile and new_data.mobile != old_data[3]:
         set_data.append("mobile = %s")
         value.append(new_data.mobile)
 
@@ -570,9 +580,7 @@ def edit_my_prof(new_data: search_data, db=Depends(get_conn),data=Depends(token_
         }
 
     else:
-        raise HTTPException(
-            status_code=400,
-            detail="حداقل یک مقدار باید تغییر کند")
+        raise HTTPException(status_code=400,detail="حداقل یک مقدار باید تغییر کند")
     
 @app.get("/get_employee" , response_model=EmployeeResponse)
 def get_employee(employee_id:int , db=Depends(get_conn) , data=Depends(check_manager)):

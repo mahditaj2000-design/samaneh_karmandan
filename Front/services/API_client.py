@@ -75,3 +75,10 @@ def change_password(password_data):
             "status_code": response.status_code,
             "detail": response.json().get("detail")
         }
+
+def tedad_users_employees():
+    url = f"{BASE_URL}/tedad_users_employees"
+
+    response = requests.get(url , headers=get_auth_header())
+
+    return response.json()
