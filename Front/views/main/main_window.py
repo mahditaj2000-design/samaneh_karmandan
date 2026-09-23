@@ -87,6 +87,16 @@ class MainWindow(QMainWindow , Ui_MainDashbord):
 
         self.label_6.setText(str(self.tedad_users))
 
+        self.dashbord_but.clicked.connect(self.show_dashboard)
+        self.employees_but.clicked.connect(self.show_employees)
+
+    def show_dashboard(self):
+        self.stackedWidget_main.setCurrentWidget(self.dashboard_page)
+
+
+    def show_employees(self):
+        self.stackedWidget_main.setCurrentWidget(self.page_2)
+
     def open_change_pass(self):
         
         self.change_password = ChangePass()
