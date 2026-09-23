@@ -4,25 +4,50 @@ BASE_URL = "http://127.0.0.1:8000"
 
 ACCSESS_TOKEN = None
 
-def login(username , password):
+def login(username, password):
+
     url = f"{BASE_URL}/enter/auth"
 
     global ACCSESS_TOKEN
 
-    form_data = {"username":username,
-                 "password":password}
+    form_data = {
+        "username": username,
+        "password": password
+    }
 
-    response = requests.post(url , data = form_data)
+    try:
+        response = requests.post(
+            url,
+            data=form_data,
+            timeout=5
+        )
 
-    if response.status_code == 200:
-        result = response.json()
-        ACCSESS_TOKEN = result["access_token"]
-        return result
-    else:
+        if response.status_code == 200:
+
+            result = response.json()
+            ACCSESS_TOKEN = result["access_token"]
+
+            return result
+
+        else:
+
+            return {
+                "detail": response.json().get(
+                    "detail",
+                    "خطا در ورود"
+                )
+            }
+
+    except requests.exceptions.ConnectionError:
+
         return {
+            "detail": "اتصال به سرور برقرار نشد"
+        }
 
-            "status_code":response.status_code,
-            "detail":response.json().get("detail")
+    except requests.exceptions.Timeout:
+
+        return {
+            "detail": "زمان اتصال به سرور تمام شد"
         }
 
 def get_auth_header():                   #برای برگرداندن توکن در هدر که بعدی ای پی ای های محافظت شده بتونن به جای هر بار فراخوانی توکن بیان از این فانکشن استفاده کنن

@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget , QMessageBox
 from .LoginPage import Ui_login_page
 from services.API_client import login , get_me
 from PySide6.QtCore import Signal
@@ -19,11 +19,17 @@ class LoginPage(QWidget , Ui_login_page):
         username = self.username_lineedit.text()
         password = self.password_lineedit.text()
 
-        result = login(username , password)
+        result = login(username, password)
 
         if "access_token" in result:
 
             self.login_success.emit(username)
-            
-        print(result)
+
+        else:
+
+            QMessageBox.warning(
+                self,
+                "ورود ناموفق",
+                result.get("detail", "خطایی در ورود رخ داد")
+            )
 
